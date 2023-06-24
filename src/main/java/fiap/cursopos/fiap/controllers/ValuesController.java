@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ValuesController {
 
-    @GetMapping("/hello-world")
+    @GetMapping("/")
     public String HelloWorld(){
-        return "hello";
+        return "index";
     }
 }
