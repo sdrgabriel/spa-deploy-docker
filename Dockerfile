@@ -13,11 +13,11 @@ WORKDIR /app
 
 COPY . /app
 
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y wget unzip
 
-RUN curl -sL https://services.gradle.org/distributions/gradle-7.1.1-bin.zip -o gradle.zip \
-    && unzip gradle.zip \
-    && rm gradle.zip \
+RUN wget -q --show-progress --progress=bar:force:noscroll https://services.gradle.org/distributions/gradle-7.1.1-bin.zip \
+    && unzip gradle-7.1.1-bin.zip \
+    && rm gradle-7.1.1-bin.zip \
     && export PATH=$PATH:/app/gradle-7.1.1/bin \
     && ./gradlew build
 
