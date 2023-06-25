@@ -7,18 +7,16 @@
 
 # ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/ ./unrandom", "-jar", "/app.jar"]
 
-FROM --platform=linux/amd64 openjdk:17-jdk-slim
+FROM maven:3.8.4-openjdk-17-slim AS build
 
 WORKDIR /app
 
 COPY . /app
 
-RUN apt-get update && apt-get install -y wget unzip
+RUN mvn package
 
-RUN wget -q --show-progress --progress=bar:force:noscroll https://services.gradle.org/distributions/gradle-7.1.1-bin.zip \
-    && unzip gradle-7.1.1-bin.zip \
-    && rm gradle-7.1.1-bin.zip \
-    && export PATH=$PATH:/app/gradle-7.1.1/bin \
-    && ./gradlew build
+FROM openjdk:17-jdk-slim
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./unrandom", "-jar", "/app/build/libs/your-jar-file.jar"]
+COPY --from=build /app/target/*.jar /app/app.jar
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./unrandom", "-jar", "/app/app.jar"]
