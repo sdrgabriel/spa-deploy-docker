@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ValuesController {
 
     @GetMapping("/")
-    public String HelloWorld(){
+    public String Index(){
         return "index";
     }
 }
