@@ -10,4 +10,4 @@ FROM openjdk:17-jdk-slim
 
 COPY --from=build /app/target/*.jar /app/app.jar
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./unrandom", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./unrandom", "-jar", "/app/app.jar"] 
